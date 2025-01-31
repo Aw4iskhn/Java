@@ -17,7 +17,7 @@ pipeline {
         // Stage 1: Checkout code from Git repository
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/Aw4iskhn/Java.git'
+                git branch: 'master', url: 'https://github.com/Aw4iskhn/Java.git'
             }
         }
 
