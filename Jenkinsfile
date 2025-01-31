@@ -1,10 +1,11 @@
 pipeline {
     agent any
 
-tools {
+    tools {
         maven 'Maven 3.9.6' // Ensure this matches the Maven installation name in Jenkins
-    }    
-environment {
+    }
+
+    environment {
         // SonarQube Scanner configuration
         SONARQUBE_SCANNER_HOME = tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
         
@@ -14,6 +15,9 @@ environment {
         // Application-specific variables
         APP_NAME = "java-app"
         DOCKER_IMAGE = "your-dockerhub-username/${APP_NAME}:${env.BUILD_ID}"
+
+        // SonarQube token (added as a credential)
+        SONAR_TOKEN = credentials('sonar-token') // Reference the token credential
     }
 
     stages {
@@ -42,13 +46,13 @@ environment {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    sh '''
-                        /var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarQubeScanner/bin/sonar-scanner \
+                    sh """
+                        ${SONARQUBE_SCANNER_HOME}/bin/sonar-scanner \
                         -Dsonar.projectKey=java-app \
                         -Dsonar.sources=src \
                         -Dsonar.host.url=http://localhost:9000 \
                         -Dsonar.login=${SONAR_TOKEN}
-                    '''
+                    """
                 }
             }
         }
