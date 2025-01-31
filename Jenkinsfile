@@ -1,7 +1,10 @@
 pipeline {
     agent any
 
-    environment {
+tools {
+        maven 'Maven 3.9.6' // Ensure this matches the Maven installation name in Jenkins
+    }    
+environment {
         // SonarQube Scanner configuration
         SONARQUBE_SCANNER_HOME = tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
         
