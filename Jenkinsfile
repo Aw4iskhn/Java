@@ -42,7 +42,7 @@ environment {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    sh "${SONARQUBE_SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=java-app -Dsonar.sources=src -Dsonar.host.url=http://your-sonarqube-server:9000"
+                    sh "${SONARQUBE_SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=java-app -Dsonar.sources=src -Dsonar.host.url=http://localhost:9000"
                 }
             }
         }
